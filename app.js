@@ -29,7 +29,7 @@ app.get("/wx", function (req, res) {
     if (signature && timestamp && nonce && echostr) {
         token = "zhaoruike"
     } else {
-        res.send("非法来源")
+        res.send("非法来源!")
     }
     var list = [token, timestamp, nonce];
     list.sort();
@@ -39,7 +39,7 @@ app.get("/wx", function (req, res) {
     if(hashcode == signature){
         return echostr
     }else{
-        res.send("非法来源")
+        res.send("非法来源!")
     }
 
 })
