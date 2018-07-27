@@ -34,7 +34,7 @@ app.get("/wx", function (req, res) {
     var list = [token, timestamp, nonce];
     list.sort();
     var listStr = list.join("")
-    md5.update(content);
+    md5.update(listStr);
     hashcode = md5.digest('hex');
     if(hashcode == signature){
         return echostr
