@@ -8,15 +8,11 @@
 </body>
 <script src="/static/js/jquery.min.js"></script>
 <script>
-    $.ajax({
-        method: "get",
-        url: '/token',
-        data: {
-        },
-        success:function(data){
-            console.log(data)
-        }
-    })
+    var appID = "wx7edc102d70649008"
+    var rui = 'http://140.143.144.215/wx/response'
+    var code = 'code'
+    var SCOPE = 'snsapi_userinfo'  // 需要用户授权
+    location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appID}&redirect_uri=${rui}&response_type=${code}&scope=${SCOPE}&state=STATE#wechat_redirect`
 </script>
 
 </html>
