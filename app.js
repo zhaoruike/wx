@@ -34,7 +34,7 @@ let url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&
  var rui = 'http://140.143.144.215/wx/response'
  var code = 'code'
  var SCOPE = 'snsapi_userinfo'  // 需要用户授权
- location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.appID}&redirect_uri=${rui}&response_type=${code}&scope=${SCOPE}&state=STATE#wechat_redirect`
+ // location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${config.appID}&redirect_uri=${rui}&response_type=${code}&scope=${SCOPE}&state=STATE#wechat_redirect`
 
 app.get("/wx", function (req, res) {
     var signature = req.query.signature,
