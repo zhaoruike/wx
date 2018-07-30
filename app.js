@@ -1,4 +1,4 @@
-let express = require('express');
+﻿let express = require('express');
 let path = require('path');
 let ejs = require('ejs');
 let app = express();
@@ -19,25 +19,26 @@ app.use(express.static('dist'));
 
 
 app.get("/wx", function (req, res) {
-    var signature = req.body.signature,
-        timestamp = req.body.timestamp,
-        nonce = req.body.nonce,
-        echostr = req.body.echostr,
+    var signature = req.query.signature,
+        timestamp = req.query.timestamp,
+        nonce = req.query.nonce,
+        echostr = req.query.echostr,
         token,
         hashcode,
-        md5 = crypto.createHash('md5');
+        md5 = crypto.createHash('sha1');
     if (signature && timestamp && nonce && echostr) {
         token = "zhaoruike"
     } else {
-        res.send("非法来源")
+       res.send("非法来源");
+       return;
     }
     var list = [token, timestamp, nonce];
     list.sort();
     var listStr = list.join("")
-    md5.update(listStr);
+    md5.update(listStr,"utf8");
     hashcode = md5.digest('hex');
     if(hashcode == signature){
-        return echostr
+	 res.send(echostr+"")
     }else{
         res.send("非法来源")
     }
