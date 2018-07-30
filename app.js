@@ -51,7 +51,11 @@ app.get("/token", function (req, res) {
     let url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + config.appID + "&secret=" + config.appSecret
     request(url, function (error, response, data) {
         if(data){
-            console.log(data)
+           var newData = JSON.parse(data);
+           var url =  `https://api.weixin.qq.com/cgi-bin/menu/create?access_token=${newData.access_token}`
+           request.post({url:url,form:config.menu,function(error1, response1, data1){
+               console.log(data1)
+           }})
         }
     })
 })
