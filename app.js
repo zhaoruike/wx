@@ -7,6 +7,8 @@ let bodyParser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let session = require('express-session');
 let crypto = require('crypto');
+let config = require("./config.js")
+let request = require("request")
 
 
 let port = process.env.PORT || 80;
@@ -19,7 +21,6 @@ app.use(express.static('dist'));
 
 
 app.get("/wx", function (req, res) {
-console.log(req.url)
     var signature = req.query.signature,
         timestamp = req.query.timestamp,
         nonce = req.query.nonce,
@@ -30,21 +31,29 @@ console.log(req.url)
     if (signature && timestamp && nonce && echostr) {
         token = "zhaoruike"
     } else {
-       res.send("非法来源");
-       return;
+        res.send("非法来源");
+        return;
     }
     var list = [token, timestamp, nonce];
     list.sort();
     var listStr = list.join("")
-    md5.update(listStr,"utf8");
+    md5.update(listStr, "utf8");
     hashcode = md5.digest('hex');
-    console.log(hashcode,signature)
-    if(hashcode == signature){
-	  res.send(echostr+"")
-    }else{
+    if (hashcode == signature) {
+        res.send(echostr + "")
+    } else {
         res.send("非法来源!")
     }
 
+})
+
+app.get("/token", function (req, res) {
+    let url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + config.appID + "&secret=" + config.appSecret
+    request(url, function (error, response, data) {
+        if(data){
+            console.log(data)
+        }
+    })
 })
 
 http.listen(port, function () {
